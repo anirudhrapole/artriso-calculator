@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artriso Marbo Calculator</title>
+  <style>
+    @font-face {
+      font-family: 'Avenir Light';
+      src: local('Avenir Light'), local('Avenir-Light'),
+        url('https://fonts.cdnfonts.com/s/17391/Avenir-Light.woff') format('woff');
+      font-weight: 300;
+    }
+
+    body {
+      font-family: 'Avenir Light', 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f2f2f2;
+    }
+
+    .calculator-container {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      width: 380px;
+      position: relative;
+      border: 1px solid #e0e0e0;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 12px;
+      color: #2e2e2e;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sub-instruction {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    label {
+      font-size: 15px;
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 600;
+      color: #444444;
+      text-align: left;
+    }
+
+    input[type="number"] {
+      padding: 14px;
+      width: 100%;
+      margin-top: 5px;
+      border-radius: 12px;
+      border: 1px solid #dcdcdc;
+      font-size: 17px;
+      outline: none;
+      text-align: center;
+      background-color: #f9f9f9;
+      color: #333;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: #888888;
+      box-shadow: 0 0 8px rgba(136, 136, 136, 0.15);
+    }
+
+    .calculate-btn {
+      background-color: #4a4a4a;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      width: 100%;
+      font-size: 17px;
+      cursor: pointer;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-top: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .calculate-btn:hover {
+      background-color: #333333;
+    }
+
+    .results {
+      margin-top: 30px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #2c2c2c;
+      display: none;
+    }
+
+    .results p {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    .results span {
+      color: #555555;
+      font-weight: 700;
+    }
+
+    .background-shapes {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .background-shapes svg {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      opacity: 0.05;
+    }
+
+    .background-shapes .circle {
+      fill: #bcbcbc;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator-container">
+    <h1>Artriso Marbo Calculator</h1>
+
+    <div class="sub-instruction">
+      Fill your mould with water, then enter the water quantity in grams below to calculate the required powder and liquid mix.
+    </div>
+
+    <label for="water">Water Quantity (grams):</label>
+    <input type="number" id="water" placeholder="E.g. 100" onfocus="clearInstruction()" oninput="resetResults()">
+
+    <button class="calculate-btn" onclick="calculateValues()">Calculate</button>
+
+    <div id="results" class="results">
+      <p><strong>Total Composite Needed:</strong> <span id="total-composite">0</span> grams</p>
+      <p><strong>Powder Needed:</strong> <span id="powder">0</span> grams</p>
+      <p><strong>Liquid Needed:</strong> <span id="liquid">0</span> grams</p>
+    </div>
+
+    <div class="background-shapes">
+      <svg class="circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+      <svg class="circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+    </div>
+  </div>
+
+  <script>
+    function resetResults() {
+      document.getElementById('results').style.display = 'none';
+    }
+
+    function clearInstruction() {
+      // Reserved for future use
+    }
+
+    function calculateValues() {
+      const waterQuantity = parseFloat(document.getElementById('water').value);
+      if (!isNaN(waterQuantity) && waterQuantity > 0) {
+        const totalComposite = waterQuantity * 1.75;
+        const powder = totalComposite * (125 / 175);
+        const liquid = totalComposite * (50 / 175);
+
+        document.getElementById('total-composite').textContent = totalComposite.toFixed(2);
+        document.getElementById('powder').textContent = powder.toFixed(2);
+        document.getElementById('liquid').textContent = liquid.toFixed(2);
+
+        document.getElementById('results').style.display = 'block';
+      } else {
+        document.getElementById('results').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
